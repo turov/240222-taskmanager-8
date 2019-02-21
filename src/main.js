@@ -6,37 +6,36 @@ const BOARD = PAGE.querySelector(`.board__tasks`);
 
 // Функция рендера фильтра
 
-function renderFilter(
-  name, count = 0, isChecked, isDisabled) {
+function renderFilter(name, count = 0, isChecked, isDisabled) {
   const FILTER = document.createElement(`div`);
-  FILTER.innerHTML = /*html*/ `<input
+  FILTER.innerHTML = `<input
   type="radio"
   id="filter__${name}"
   class="filter__input visually-hidden"
   name="filter"
-  ${isChecked ? "checked" : ""}
-  ${isDisabled ? "disabled" : ""}
+  ${isChecked ? `checked` : ``}
+  ${isDisabled ? `disabled` : ``}
 />
 <label for=filter__${name} class="filter__label"
   >${name} <span class="filter__${name}-count">${count}</span></label
->`
+>`;
   MAIN_FILTER.appendChild(FILTER);
-};
+}
 
 // Функция нахождения псевдослучайного числа
 
 function randomInteger(min, max) {
-  let rand = min - 0.5 + Math.random() * (max - min + 1)
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
   rand = Math.round(rand);
   return rand;
-};
+}
 
 // Функция рендера базовой карточки
 
 function renderCard() {
   const CARD = document.createElement(`article`);
   CARD.classList.add(`card`);
-  CARD.innerHTML = /*html*/ `<form class="card__form" method="get">
+  CARD.innerHTML = `<form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
       <button type="button" class="card__btn card__btn--edit">
@@ -325,63 +324,63 @@ It is example of repeating task. It marks by wave.</textarea
       <button class="card__delete" type="button">delete</button>
     </div>
   </div>
-</form>`
+</form>`;
   BOARD.appendChild(CARD);
-};
+}
 
 // Массив с обьектами свойств фильтров
 
 const FILTER_PROPS = [{
-    name: `all`,
-    count: randomInteger(0, 1000),
-    checked: `checked`,
-    disabled: ``
-  },
-  {
-    name: `overdue`,
-    checked: ``,
-    disabled: `disabled`
-  },
-  {
-    name: `today`,
-    checked: ``,
-    disabled: `disabled`
-  },
-  {
-    name: `favorites`,
-    count: randomInteger(0, 1000),
-    checked: ``,
-    disabled: ``
-  },
-  {
-    name: `repeating`,
-    count: randomInteger(0, 1000),
-    checked: ``,
-    disabled: ``
-  },
-  {
-    name: `tags`,
-    count: randomInteger(0, 1000),
-    checked: ``,
-    disabled: ``
-  },
-  {
-    name: `archive`,
-    count: randomInteger(0, 1000),
-    checked: ``,
-    disabled: ``
-  }
+  name: `all`,
+  count: randomInteger(0, 1000),
+  checked: `checked`,
+  disabled: ``
+},
+{
+  name: `overdue`,
+  checked: ``,
+  disabled: `disabled`
+},
+{
+  name: `today`,
+  checked: ``,
+  disabled: `disabled`
+},
+{
+  name: `favorites`,
+  count: randomInteger(0, 1000),
+  checked: ``,
+  disabled: ``
+},
+{
+  name: `repeating`,
+  count: randomInteger(0, 1000),
+  checked: ``,
+  disabled: ``
+},
+{
+  name: `tags`,
+  count: randomInteger(0, 1000),
+  checked: ``,
+  disabled: ``
+},
+{
+  name: `archive`,
+  count: randomInteger(0, 1000),
+  checked: ``,
+  disabled: ``
+}
 ];
 
 // Обнуляем готовую разметку и запускаем цикл рендера фильтров
 MAIN_FILTER.innerHTML = ``;
-FILTER_PROPS.forEach(element => {
-  renderFilter(element.name, element.count, element.checked, element.disabled)
+FILTER_PROPS.forEach((element) => {
+  renderFilter(element.name, element.count, element.checked, element.disabled);
 });
 
 // Обнуляем готовую разметку и запускаем цикл рендера карточек
 
 BOARD.innerHTML = ``;
 for (let i = 0; i < 7; i++) {
-  renderCard()
+  renderCard();
 }
