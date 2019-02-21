@@ -376,12 +376,12 @@ const FILTER_PROPS = [{
 // Обнуляем готовую разметку и запускаем цикл рендера фильтров
 MAIN_FILTER.innerHTML = ``;
 FILTER_PROPS.forEach(element => {
-  renderFilter(element.name, element.count, element.checked, element.disabled);
+  renderFilter(element.name, element.count, element.checked, element.disabled)
 });
 
 // Обнуляем готовую разметку и запускаем цикл рендера карточек
 
 BOARD.innerHTML = ``;
 for (let i = 0; i < 7; i++) {
-  renderCard();
+  renderCard()
 }
