@@ -7,8 +7,8 @@ const board = page.querySelector(`.board__tasks`);
 // Функция рендера фильтра
 
 function renderFilter(name, count = 0, isChecked, isDisabled) {
-  const FILTER = document.createElement(`div`);
-  FILTER.innerHTML = `<input
+  const filter = document.createElement(`div`);
+  filter.innerHTML = `<input
   type="radio"
   id="filter__${name}"
   class="filter__input visually-hidden"
@@ -19,7 +19,7 @@ function renderFilter(name, count = 0, isChecked, isDisabled) {
 <label for=filter__${name} class="filter__label"
   >${name} <span class="filter__${name}-count">${count}</span></label
 >`;
-  mainFilter.appendChild(FILTER);
+  mainFilter.appendChild(filter);
 }
 
 // Функция нахождения псевдослучайного числа
@@ -33,9 +33,9 @@ function randomInteger(min, max) {
 // Функция рендера базовой карточки
 
 function renderCard() {
-  const CARD = document.createElement(`article`);
-  CARD.classList.add(`card`);
-  CARD.innerHTML = `<form class="card__form" method="get">
+  const card = document.createElement(`article`);
+  card.classList.add(`card`);
+  card.innerHTML = `<form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
       <button type="button" class="card__btn card__btn--edit">
@@ -325,7 +325,7 @@ It is example of repeating task. It marks by wave.</textarea
     </div>
   </div>
 </form>`;
-  board.appendChild(CARD);
+  board.appendChild(card);
 }
 
 // Массив с обьектами свойств фильтров
