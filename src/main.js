@@ -1,8 +1,8 @@
 'use strict';
 
-const PAGE = document.body;
-const MAIN_FILTER = PAGE.querySelector(`.main__filter`);
-const BOARD = PAGE.querySelector(`.board__tasks`);
+const page = document.body;
+const mainFilter = page.querySelector(`.main__filter`);
+const board = page.querySelector(`.board__tasks`);
 
 // Функция рендера фильтра
 
@@ -19,7 +19,7 @@ function renderFilter(name, count = 0, isChecked, isDisabled) {
 <label for=filter__${name} class="filter__label"
   >${name} <span class="filter__${name}-count">${count}</span></label
 >`;
-  MAIN_FILTER.appendChild(FILTER);
+  mainFilter.appendChild(FILTER);
 }
 
 // Функция нахождения псевдослучайного числа
@@ -325,7 +325,7 @@ It is example of repeating task. It marks by wave.</textarea
     </div>
   </div>
 </form>`;
-  BOARD.appendChild(CARD);
+  board.appendChild(CARD);
 }
 
 // Массив с обьектами свойств фильтров
@@ -372,15 +372,31 @@ const FILTER_PROPS = [{
 }
 ];
 
-// Обнуляем готовую разметку и запускаем цикл рендера фильтров
-MAIN_FILTER.innerHTML = ``;
+// Запускаем цикл рендера фильтров
 FILTER_PROPS.forEach((element) => {
   renderFilter(element.name, element.count, element.checked, element.disabled);
 });
 
-// Обнуляем готовую разметку и запускаем цикл рендера карточек
-
-BOARD.innerHTML = ``;
-for (let i = 0; i < 7; i++) {
-  renderCard();
+// Функция заполнения доски карточками
+function fillBoard(count) {
+  for (let i = 0; i < count; i++) {
+    renderCard();
+  }
 }
+
+// Заполняем доску 7-ю карточками
+fillBoard(7);
+
+// Функция обнуления доски и её заполнения случайным количеством карточек (от 1 до 12)
+function generateCards() {
+  board.innerHTML = ``;
+  fillBoard(randomInteger(1, 12));
+}
+
+// Находим в DOM фильтры
+const filterLabels = page.querySelectorAll(`.filter__label`);
+
+// Навешиваем события клика на каждый фильтр по которому вызывается функция generateCards
+filterLabels.forEach((element) => {
+  element.addEventListener(`click`, generateCards);
+});
