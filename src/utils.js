@@ -1,10 +1,24 @@
 export const board = document.body.querySelector(`.board__tasks`);
 export const mainFilter = document.querySelector(`.main__filter`);
 
+// Функция нахождения случайного числа от min до max
 export const getRandomInteger = (min, max) => {
   let rand = min - 0.5 + Math.random() * (max - min + 1);
   rand = Math.round(rand);
   return rand;
+};
+
+// Случайный элемент массива
+export const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
+
+// Случайное булево значение
+export const getRandomBoolean = () => {
+  return (Math.random() >= 0.5);
+};
+
+// Случайный порядок в массиве
+export const mixArray = () => {
+  return Math.random() - 0.5;
 };
 
 export const FILTER_PROPS = [{

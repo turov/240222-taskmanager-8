@@ -1,6 +1,6 @@
-import {getRandomInteger, board, mainFilter, FILTER_PROPS} from '../src/utils.js';
-import createFilter from '../src/create-filter.js';
-import createCard from '../src/create-card.js';
+import {getRandomInteger, board, mainFilter, FILTER_PROPS} from './utils.js';
+import createFilter from './create-filter.js';
+import createCard from './create-card.js';
 
 // Запускаем цикл рендера фильтров
 FILTER_PROPS.forEach((element) => {

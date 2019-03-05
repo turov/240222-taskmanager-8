@@ -1,6 +1,11 @@
-export default () => {
+import repeatingDays from './create-repeating-days';
+import task from './data';
+
+console.log(repeatingDays);
+
+export default (task => {
   const card = document.createElement(`article`);
-  card.classList.add(`card`);
+  card.classList.add(`card card__${task.color}`);
   card.innerHTML = `<form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
@@ -31,7 +36,7 @@ export default () => {
           placeholder="Start typing your text here..."
           name="text"
         >
-It is example of repeating task. It marks by wave.</textarea
+        ${task.title}</textarea
         >
       </label>
     </div>
@@ -40,7 +45,7 @@ It is example of repeating task. It marks by wave.</textarea
       <div class="card__details">
         <div class="card__dates">
           <button class="card__date-deadline-toggle" type="button">
-            date: <span class="card__date-status">no</span>
+            date: <span class="card__date-status">${task.dueDate}</span>
           </button>
 
           <fieldset class="card__date-deadline" disabled>
@@ -67,81 +72,7 @@ It is example of repeating task. It marks by wave.</textarea
           </button>
 
           <fieldset class="card__repeat-days" disabled>
-            <div class="card__repeat-days-inner">
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-mo-2"
-                name="repeat"
-                value="mo"
-              />
-              <label class="card__repeat-day" for="repeat-mo-2"
-                >mo</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-tu-2"
-                name="repeat"
-                value="tu"
-                checked
-              />
-              <label class="card__repeat-day" for="repeat-tu-2"
-                >tu</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-we-2"
-                name="repeat"
-                value="we"
-              />
-              <label class="card__repeat-day" for="repeat-we-2"
-                >we</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-th-2"
-                name="repeat"
-                value="th"
-              />
-              <label class="card__repeat-day" for="repeat-th-2"
-                >th</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-fr-2"
-                name="repeat"
-                value="fr"
-                checked
-              />
-              <label class="card__repeat-day" for="repeat-fr-2"
-                >fr</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                name="repeat"
-                value="sa"
-                id="repeat-sa-2"
-              />
-              <label class="card__repeat-day" for="repeat-sa-2"
-                >sa</label
-              >
-              <input
-                class="visually-hidden card__repeat-day-input"
-                type="checkbox"
-                id="repeat-su-2"
-                name="repeat"
-                value="su"
-                checked
-              />
-              <label class="card__repeat-day" for="repeat-su-2"
-                >su</label
-              >
-            </div>
+            ${repeatingDays}
           </fieldset>
         </div>
 
