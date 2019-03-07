@@ -5,10 +5,13 @@ const tags = [`homework`, `theory`, `practice`, `intensive`, `keks`, `cinema`, `
 const titles = [`Изучить теорию`, `Сделать домашку`, `Пройти интенсив на соточку`];
 const WEEK_DAYS = [`mo`, `tu`, `we`, `th`, `fr`, `sa`, `su`];
 
-const resultRepeatingDays = WEEK_DAYS.reduce((res, day)=>{
-  res[day] = getRandomBoolean();
-  return res;
-}, {});
+const getRepeatingDays = () => {
+  const resultRepeatingDays = WEEK_DAYS.reduce((res, day)=>{
+    res[day] = getRandomBoolean();
+    return res;
+  }, {});
+  return resultRepeatingDays;
+};
 
 const getTags = () => {
   tags.sort(mixArray);
@@ -27,7 +30,7 @@ export const generateTask = () => {
     tags: getTags(),
     picture: getPicture(),
     color: getRandomItem(colors),
-    repeatingDays: resultRepeatingDays,
+    repeatingDays: getRepeatingDays(),
     isFavorite: getRandomBoolean(),
     isDone: getRandomBoolean(),
   };

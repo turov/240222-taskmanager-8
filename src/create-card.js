@@ -1,5 +1,6 @@
-import repeatingDays from './create-repeating-days';
-import getHastags from './create-hashtags';
+import {createTags} from './create-hashtags';
+import {createRepeatingDays} from './create-repeating-days';
+import {createCardColor} from './create-card-color';
 
 export default (task) => {
   const card = document.createElement(`article`);
@@ -70,12 +71,12 @@ export default (task) => {
           </button>
 
           <fieldset class="card__repeat-days">
-            ${repeatingDays()}
+            ${createRepeatingDays(task.repeatingDays)}
           </fieldset>
         </div>
 
         <div class="card__hashtag">
-          ${getHastags()}
+          ${createTags(task.tags)}
         </div>
         <label>
         <input
@@ -102,69 +103,7 @@ export default (task) => {
 
       <div class="card__colors-inner">
         <h3 class="card__colors-title">Color</h3>
-        <div class="card__colors-wrap">
-          <input
-            type="radio"
-            id="color-black-2"
-            class="card__color-input card__color-input--black visually-hidden"
-            name="color"
-            value="black"
-          />
-          <label
-            for="color-black-2"
-            class="card__color card__color--black"
-            >black</label
-          >
-          <input
-            type="radio"
-            id="color-yellow-2"
-            class="card__color-input card__color-input--yellow visually-hidden"
-            name="color"
-            value="yellow"
-          />
-          <label
-            for="color-yellow-2"
-            class="card__color card__color--yellow"
-            >yellow</label
-          >
-          <input
-            type="radio"
-            id="color-blue-2"
-            class="card__color-input card__color-input--blue visually-hidden"
-            name="color"
-            value="blue"
-          />
-          <label
-            for="color-blue-2"
-            class="card__color card__color--blue"
-            >blue</label
-          >
-          <input
-            type="radio"
-            id="color-green-2"
-            class="card__color-input card__color-input--green visually-hidden"
-            name="color"
-            value="green"
-          />
-          <label
-            for="color-green-2"
-            class="card__color card__color--green"
-            >green</label
-          >
-          <input
-            type="radio"
-            id="color-pink-2"
-            class="card__color-input card__color-input--pink visually-hidden"
-            name="color"
-            value="pink"
-            checked
-          />
-          <label
-            for="color-pink-2"
-            class="card__color card__color--pink"
-            >pink</label
-          >
-        </div>
+          ${createCardColor()}
       </div>
     </div>
 

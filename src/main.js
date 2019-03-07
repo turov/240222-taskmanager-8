@@ -10,20 +10,29 @@ FILTER_PROPS.forEach((element) => {
 });
 
 // Функция заполнения доски карточками
-function fillBoard(count) {
-  for (let i = 0; i < count; i++) {
-    const card = createCard(generateTask());
-    board.appendChild(card);
+const fillBoard = {
+  makeCard: (count) => {
+    const cards = [];
+    for (let i = 0; i < count; i++) {
+      cards.push(createCard(generateTask()));
+    }
+    return cards;
+  },
+  fillDesk: (obj) => {
+    obj.forEach((element) => {
+      board.appendChild(element);
+    });
   }
-}
+};
+
 
 // Заполняем доску 7-ю карточками
-fillBoard(7);
+fillBoard.fillDesk(fillBoard.makeCard(7));
 
 // Функция обнуления доски и её заполнения случайным количеством карточек (от 1 до 12)
 function generateCards() {
   board.innerHTML = ``;
-  fillBoard(getRandomInteger(1, 12));
+  fillBoard.fillDesk(fillBoard.makeCard((getRandomInteger(1, 12))));
 }
 
 // Находим в DOM фильтры

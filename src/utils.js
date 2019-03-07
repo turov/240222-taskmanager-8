@@ -21,6 +21,16 @@ export const mixArray = () => {
   return Math.random() - 0.5;
 };
 
+// Цвета
+
+export const colors = {
+  pink: `pink`,
+  blue: `blue`,
+  black: `black`,
+  yellow: `yellow`,
+  green: `green`
+};
+
 export const FILTER_PROPS = [{
   name: `all`,
   count: getRandomInteger(0, 1000),

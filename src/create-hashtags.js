@@ -1,9 +1,7 @@
-import {generateTask} from './data';
-
-export default () => {
+export const createTags = (list) => {
   const hashtagList = document.createElement(`div`);
   hashtagList.classList.add(`card__hashtag-list`);
-  generateTask().tags.forEach((element) => {
+  list.forEach((element) => {
     hashtagList.innerHTML += `<span class="card__hashtag-inner">
     <input
       type="hidden"
