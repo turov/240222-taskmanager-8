@@ -1,6 +1,7 @@
-import {getRandomInteger, board, mainFilter, FILTER_PROPS} from './utils.js';
-import createFilter from './create-filter.js';
-import createCard from './create-card.js';
+import {getRandomInteger, board, mainFilter, FILTER_PROPS} from './utils';
+import createFilter from './create-filter';
+import createCard from './create-card';
+import {generateTask} from './data';
 
 // Запускаем цикл рендера фильтров
 FILTER_PROPS.forEach((element) => {
@@ -11,7 +12,7 @@ FILTER_PROPS.forEach((element) => {
 // Функция заполнения доски карточками
 function fillBoard(count) {
   for (let i = 0; i < count; i++) {
-    const card = createCard();
+    const card = createCard(generateTask());
     board.appendChild(card);
   }
 }

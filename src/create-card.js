@@ -1,11 +1,9 @@
 import repeatingDays from './create-repeating-days';
-import task from './data';
+import getHastags from './create-hashtags';
 
-console.log(repeatingDays);
-
-export default (task => {
+export default (task) => {
   const card = document.createElement(`article`);
-  card.classList.add(`card card__${task.color}`);
+  card.classList.add(`card`, `card--${task.color}`);
   card.innerHTML = `<form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
@@ -71,78 +69,32 @@ export default (task => {
             repeat:<span class="card__repeat-status">no</span>
           </button>
 
-          <fieldset class="card__repeat-days" disabled>
-            ${repeatingDays}
+          <fieldset class="card__repeat-days">
+            ${repeatingDays()}
           </fieldset>
         </div>
 
         <div class="card__hashtag">
-          <div class="card__hashtag-list">
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #repeat
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
-
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #cinema
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
-
-            <span class="card__hashtag-inner">
-              <input
-                type="hidden"
-                name="hashtag"
-                value="repeat"
-                class="card__hashtag-hidden-input"
-              />
-              <button type="button" class="card__hashtag-name">
-                #entertaiment
-              </button>
-              <button type="button" class="card__hashtag-delete">
-                delete
-              </button>
-            </span>
-          </div>
-
-          <label>
-            <input
-              type="text"
-              class="card__hashtag-input"
-              name="hashtag-input"
-              placeholder="Type new hashtag here"
-            />
-          </label>
+          ${getHastags()}
         </div>
+        <label>
+        <input
+          type="text"
+          class="card__hashtag-input"
+          name="hashtag-input"
+          placeholder="Type new hashtag here"
+        />
+      </label>
       </div>
 
-      <label class="card__img-wrap card__img-wrap--empty">
+      <label class="card__img-wrap">
         <input
           type="file"
           class="card__img-input visually-hidden"
           name="img"
         />
         <img
-          src="img/add-photo.svg"
+          src="${task.picture}"
           alt="task picture"
           class="card__img"
         />
