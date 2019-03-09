@@ -71,7 +71,9 @@ export default (task) => {
           </button>
 
           <fieldset class="card__repeat-days">
+            <div class="card__repeat-days-inner">
             ${createRepeatingDays(task.repeatingDays)}
+            </div>
           </fieldset>
         </div>
 
@@ -103,7 +105,9 @@ export default (task) => {
 
       <div class="card__colors-inner">
         <h3 class="card__colors-title">Color</h3>
-          ${createCardColor()}
+          <div class="card__colors-wrap">
+          ${createCardColor(task.color)}
+          </div>
       </div>
     </div>
 

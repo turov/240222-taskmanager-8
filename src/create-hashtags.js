@@ -1,8 +1,7 @@
 export const createTags = (list) => {
-  const hashtagList = document.createElement(`div`);
-  hashtagList.classList.add(`card__hashtag-list`);
-  list.forEach((element) => {
-    hashtagList.innerHTML += `<span class="card__hashtag-inner">
+  return `<div class="card__hashtag-list">
+  ${list.map((element) => {
+    return `<span class="card__hashtag-inner">
     <input
       type="hidden"
       name="hashtag"
@@ -16,6 +15,6 @@ export const createTags = (list) => {
       delete
     </button>
   </span>`;
-  });
-  return hashtagList.outerHTML;
+  }).join(``)}
+  </div>`;
 };

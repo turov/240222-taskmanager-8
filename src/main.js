@@ -9,30 +9,29 @@ FILTER_PROPS.forEach((element) => {
   mainFilter.appendChild(filter);
 });
 
-// Функция заполнения доски карточками
-const fillBoard = {
-  makeCard: (count) => {
-    const cards = [];
-    for (let i = 0; i < count; i++) {
-      cards.push(createCard(generateTask()));
-    }
-    return cards;
-  },
-  fillDesk: (obj) => {
-    obj.forEach((element) => {
-      board.appendChild(element);
-    });
+// Функция генерации массива с данными
+const makeTasks = (count) => {
+  const tasks = [];
+  for (let i = 0; i < count; i++) {
+    tasks.push(generateTask());
   }
+  return tasks;
 };
 
+// Функция создания карточек по данным
+const fillBoard = (tasks) => {
+  tasks.forEach((element)=>{
+    board.appendChild(createCard(element));
+  });
+};
 
 // Заполняем доску 7-ю карточками
-fillBoard.fillDesk(fillBoard.makeCard(7));
+fillBoard(makeTasks(7));
 
 // Функция обнуления доски и её заполнения случайным количеством карточек (от 1 до 12)
 function generateCards() {
   board.innerHTML = ``;
-  fillBoard.fillDesk(fillBoard.makeCard((getRandomInteger(1, 12))));
+  fillBoard(makeTasks(getRandomInteger(1, 12)));
 }
 
 // Находим в DOM фильтры

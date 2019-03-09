@@ -1,23 +1,21 @@
 import {colors} from './utils';
 
-export const createCardColor = () => {
-  const cardColorsWrap = document.createElement(`div`);
-  cardColorsWrap.classList.add(`card__colors-wrap`);
-  for (let color in colors) {
-    if (colors.hasOwnProperty(color)) {
-      cardColorsWrap.innerHTML += `
+export const createCardColor = (color) => {
+  const colorArray = [];
+  for (const key of Object.keys(colors)) {
+    colorArray.push(`
       <input
       type="radio"
-      id="color-${color}-2"
-      class="card__color-input card__color-input--${color} visually-hidden"
+      id="color-${key}-2"
+      class="card__color-input card__color-input--${key} visually-hidden"
       name="color"
-      value="${color}"
+      value="${key}"
+      ${key === color ? `checked` : ``}
   />
   <label
-    for="color-${color}-2"
-    class="card__color card__color--${color}"
-    >${color}</label>`;
-    }
+    for="color-${key}-2"
+    class="card__color card__color--${key}"
+    >${key}</label>`);
   }
-  return cardColorsWrap.outerHTML;
+  return colorArray.join(``);
 };
