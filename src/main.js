@@ -2,6 +2,8 @@ import {getRandomInteger, board, mainFilter, FILTER_PROPS} from './utils';
 import createFilter from './create-filter';
 import createCard from './create-card';
 import {generateTask} from './data';
+import Task from './task';
+import TaskEdit from './taskEdit';
 
 // Запускаем цикл рендера фильтров
 FILTER_PROPS.forEach((element) => {
@@ -18,20 +20,34 @@ const makeTasks = (count) => {
   return tasks;
 };
 
-// Функция создания карточек по данным
-const fillBoard = (tasks) => {
-  tasks.forEach((element)=>{
-    board.appendChild(createCard(element));
+const renderTasks = (tasks) => {
+  tasks.forEach((element) => {
+
+    const taskComponent = new Task(element);
+    const editTaskComponent = new TaskEdit(element);
+
+    taskComponent.onEdit = () => {
+      editTaskComponent.render();
+      board.replaceChild(editTaskComponent.element, taskComponent.element);
+      taskComponent.unrender();
+    };
+
+    editTaskComponent.onSubmit = () => {
+      taskComponent.render();
+      board.replaceChild(taskComponent.element, editTaskComponent.element);
+      editTaskComponent.unrender();
+    };
+
+    board.appendChild(taskComponent.render());
   });
 };
 
-// Заполняем доску 7-ю карточками
-fillBoard(makeTasks(7));
+renderTasks(makeTasks(7));
 
 // Функция обнуления доски и её заполнения случайным количеством карточек (от 1 до 12)
 function generateCards() {
   board.innerHTML = ``;
-  fillBoard(makeTasks(getRandomInteger(1, 12)));
+  renderTasks(makeTasks(getRandomInteger(1, 12)));
 }
 
 // Находим в DOM фильтры

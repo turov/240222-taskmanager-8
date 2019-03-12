@@ -23,10 +23,20 @@ const getPicture = () => {
   return `http://picsum.photos/100/100?r=${Math.random()}`;
 };
 
+const getTaskDate = () => {
+  let dateObj = {};
+  let date = new Date();
+  date.setTime(Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000);
+  date = date.toString().split(` `);
+  dateObj.date = date[2] + ` ` + date[1];
+  dateObj.time = date[4].split(`:`).splice(0, 2).join(`:`);
+  return dateObj;
+};
+
 export const generateTask = () => {
   const task = {
     title: getRandomItem(titles),
-    dueDate: Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
+    dueDate: getTaskDate(),
     tags: getTags(),
     picture: getPicture(),
     color: getRandomItem(colors),
