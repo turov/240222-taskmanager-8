@@ -1,6 +1,5 @@
 import {getRandomInteger, board, mainFilter, FILTER_PROPS} from './utils';
 import createFilter from './create-filter';
-import createCard from './create-card';
 import {generateTask} from './data';
 import Task from './task';
 import TaskEdit from './taskEdit';
