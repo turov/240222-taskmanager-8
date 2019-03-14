@@ -16,14 +16,15 @@ const makeTasks = (count) => {
   for (let i = 0; i < count; i++) {
     tasks.push(generateTask());
   }
+
   return tasks;
 };
 
 const renderTasks = (tasks) => {
-  tasks.forEach((element) => {
+  tasks.forEach((element, id) => {
 
-    const taskComponent = new Task(element);
-    const editTaskComponent = new TaskEdit(element);
+    const taskComponent = new Task(element, id);
+    const editTaskComponent = new TaskEdit(element, id);
 
     taskComponent.onEdit = () => {
       editTaskComponent.render();

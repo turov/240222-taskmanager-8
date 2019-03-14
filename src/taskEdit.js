@@ -2,7 +2,7 @@ import {colors} from './utils';
 import {createElement} from './create-element';
 
 export default class TaskEdit {
-  constructor(data) {
+  constructor(data, id) {
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -11,6 +11,7 @@ export default class TaskEdit {
     this._repeatingDays = data.repeatingDays;
     this._isFavorite = data.isFavorite;
     this._isDone = data.isDone;
+    this._id = id;
 
     this._element = null;
     this._onSubmit = null;
@@ -90,7 +91,7 @@ export default class TaskEdit {
                 type="text"
                 placeholder="23 September"
                 name="date"
-                value="${this._dueDate.date}"
+                value="${this._dueDate}"
               />
             </label>
             <label class="card__input-deadline-wrap">
@@ -99,7 +100,7 @@ export default class TaskEdit {
                 type="text"
                 placeholder="11:15 PM"
                 name="time"
-                value="${this._dueDate.time}"
+                value="${this._dueDate}"
               />
             </label>
           </fieldset>
@@ -113,12 +114,12 @@ export default class TaskEdit {
             ${Object.keys(this._repeatingDays).map((element) => {
     return `<input class="visually-hidden card__repeat-day-input"
         type="checkbox"
-        id="repeat-${element}-2"
+        id="repeat-${element}-${this._id + 1}"
         name="repeat"
         value="${element}"
         ${this._repeatingDays[element] ? `checked` : ``}
         "/>
-      <label class="card__repeat-day" for="repeat-${element}-2"
+      <label class="card__repeat-day" for="repeat-${element}-${this._id + 1}"
         >${element}</label>`;
   }).join(``)}
             </div>
@@ -175,14 +176,14 @@ export default class TaskEdit {
           ${Object.keys(colors).map((element) => {
     return `<input
             type="radio"
-            id="color-${element}-2"
+            id="color-${element}-${this._id + 1}"
             class="card__color-input card__color-input--${element} visually-hidden"
             name="color"
             value="${element}"
             ${element === this._color ? `checked` : ``}
         />
         <label
-          for="color-${element}-2"
+          for="color-${element}-${this._id + 1}"
           class="card__color card__color--${element}"
           >${element}</label>`;
   }).join(``)}
@@ -210,12 +211,22 @@ export default class TaskEdit {
   }
 
   bind() {
-    this._element.querySelector(`.card__form`)
-        .addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+    this._cardForm = this._element.querySelector(`.card__form`);
+    this._onSubmitButtonClickBound = this._onSubmitButtonClick.bind(this);
+    this._cardForm.addEventListener(`submit`, this._onSubmitButtonClickBound);
   }
 
   unbind() {
-    this._element.querySelector(`.card__form`)
-        .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+    this._cardForm.removeEventListener(`sumbit`, this._onSubmitButtonClickBound);
   }
+
+  // bind() {
+  //   this._element.querySelector(`.card__form`)
+  //       .addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  // }
+
+  // unbind() {
+  //   this._element.querySelector(`.card__form`)
+  //       .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
+  // }
 }

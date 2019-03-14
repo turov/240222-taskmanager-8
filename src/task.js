@@ -1,7 +1,7 @@
 import {createElement} from './create-element';
 
 export default class Task {
-  constructor(data) {
+  constructor(data, id) {
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -10,6 +10,7 @@ export default class Task {
     this._repeatingDays = data.repeatingDays;
     this._isFavorite = data.isFavorite;
     this._isDone = data.isDone;
+    this._id = id;
 
     this._element = null;
     this._state = {
@@ -20,7 +21,7 @@ export default class Task {
   }
 
   _isRepeated() {
-    return Object.values(this._repeatingDays).some((it) => it === true);
+    return Object.values(this._repeatingDays).some((it) => it);
   }
 
   _isDeadline() {
@@ -113,13 +114,13 @@ export default class Task {
   }
 
   bind() {
-    this._element.querySelector(`.card__btn--edit`)
-        .addEventListener(`click`, this._onEditButtonClick.bind(this));
+    this._btnEdit = this._element.querySelector(`.card__btn--edit`);
+    this._onEditButtonClickBound = this._onEditButtonClick.bind(this);
+    this._btnEdit.addEventListener(`click`, this._onEditButtonClickBound);
   }
 
   unbind() {
-    this._element.querySelector(`.card__btn--edit`)
-      .removeEventListener(`click`, this._onEditButtonClick);
+    this._btnEdit.removeEventListener(`click`, this._onEditButtonClickBound);
   }
 
   render() {
