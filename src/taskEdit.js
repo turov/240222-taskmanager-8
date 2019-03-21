@@ -200,7 +200,7 @@ export default class TaskEdit extends Component {
     this._onSubmitButtonClickBound = this._onSubmitButtonClick.bind(this);
     this._cardForm.addEventListener(`submit`, this._onSubmitButtonClickBound);
   }
-  
+
   _removeListeners() {
     this._cardForm.removeEventListener(`sumbit`, this._onSubmitButtonClickBound);
   }
