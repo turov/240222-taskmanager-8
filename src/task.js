@@ -1,7 +1,8 @@
-import {createElement} from './create-element';
+import Component from './component';
 
-export default class Task {
+export default class Task extends Component {
   constructor(data, id) {
+    super();
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -11,11 +12,6 @@ export default class Task {
     this._isFavorite = data.isFavorite;
     this._isDone = data.isDone;
     this._id = id;
-
-    this._element = null;
-    this._state = {
-      // isEdit: false
-    };
 
     this._onEdit = null;
   }
@@ -33,10 +29,6 @@ export default class Task {
     if (typeof this._onEdit === `function`) {
       this._onEdit();
     }
-  }
-
-  get element() {
-    return this._element;
   }
 
   set onEdit(fn) {
@@ -113,24 +105,13 @@ export default class Task {
 </form>`.trim();
   }
 
-  bind() {
+  _addListeners() {
     this._btnEdit = this._element.querySelector(`.card__btn--edit`);
     this._onEditButtonClickBound = this._onEditButtonClick.bind(this);
     this._btnEdit.addEventListener(`click`, this._onEditButtonClickBound);
   }
 
-  unbind() {
+  _removeListeners() {
     this._btnEdit.removeEventListener(`click`, this._onEditButtonClickBound);
-  }
-
-  render() {
-    this._element = createElement(this.template);
-    this.bind();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
   }
 }

@@ -1,8 +1,9 @@
 import {colors} from './utils';
-import {createElement} from './create-element';
+import Component from './component';
 
-export default class TaskEdit {
+export default class TaskEdit extends Component {
   constructor(data, id) {
+    super();
     this._title = data.title;
     this._dueDate = data.dueDate;
     this._tags = data.tags;
@@ -13,7 +14,6 @@ export default class TaskEdit {
     this._isDone = data.isDone;
     this._id = id;
 
-    this._element = null;
     this._onSubmit = null;
   }
 
@@ -34,10 +34,6 @@ export default class TaskEdit {
 
   set onSubmit(fn) {
     this._onSubmit = fn;
-  }
-
-  get element() {
-    return this._element;
   }
 
   get template() {
@@ -199,34 +195,13 @@ export default class TaskEdit {
 </form>`.trim();
   }
 
-  render() {
-    this._element = createElement(this.template);
-    this.bind();
-    return this._element;
-  }
-
-  unrender() {
-    this.unbind();
-    this._element = null;
-  }
-
-  bind() {
+  _addListeners() {
     this._cardForm = this._element.querySelector(`.card__form`);
     this._onSubmitButtonClickBound = this._onSubmitButtonClick.bind(this);
     this._cardForm.addEventListener(`submit`, this._onSubmitButtonClickBound);
   }
-
-  unbind() {
+  
+  _removeListeners() {
     this._cardForm.removeEventListener(`sumbit`, this._onSubmitButtonClickBound);
   }
-
-  // bind() {
-  //   this._element.querySelector(`.card__form`)
-  //       .addEventListener(`submit`, this._onSubmitButtonClick.bind(this));
-  // }
-
-  // unbind() {
-  //   this._element.querySelector(`.card__form`)
-  //       .removeEventListener(`submit`, this._onSubmitButtonClick.bind(this));
-  // }
 }
