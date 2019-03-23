@@ -16,7 +16,11 @@ const getRepeatingDays = () => {
 const getTags = () => {
   tags.sort(mixArray);
   let tagsList = tags.slice(0, getRandomInteger(0, 3));
-  return tagsList;
+  let tagsSet = new Set();
+  tagsList.forEach((element) => {
+    tagsSet.add(element);
+  });
+  return tagsSet;
 };
 
 const getPicture = () => {

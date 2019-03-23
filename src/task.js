@@ -76,7 +76,7 @@ export default class Task extends Component {
       <div class="card__details">
         <div class="card__hashtag">
           <div class="card__hastag-list>
-          ${this._tags.map((element) => {
+          ${Array.from(this._tags).map((element) => {
     return `<span class="card__hashtag-inner">
             <input
               type="hidden"
@@ -113,5 +113,12 @@ export default class Task extends Component {
 
   _removeListeners() {
     this._btnEdit.removeEventListener(`click`, this._onEditButtonClickBound);
+  }
+
+  update(data) {
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
   }
 }

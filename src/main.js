@@ -32,7 +32,20 @@ const renderTasks = (tasks) => {
       taskComponent.unrender();
     };
 
-    editTaskComponent.onSubmit = () => {
+    // editTaskComponent.onSubmit = () => {
+    //   taskComponent.render();
+    //   board.replaceChild(taskComponent.element, editTaskComponent.element);
+    //   editTaskComponent.unrender();
+    // };
+
+    editTaskComponent.onSubmit = (newObject) => {
+      element.title = newObject.title;
+      element.tags = newObject.tags;
+      element.color = newObject.color;
+      element.repeatingDays = newObject.repeatingDays;
+      element.dueDate = newObject.dueDate;
+
+      taskComponent.update(element);
       taskComponent.render();
       board.replaceChild(taskComponent.element, editTaskComponent.element);
       editTaskComponent.unrender();

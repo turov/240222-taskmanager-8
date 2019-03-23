@@ -14,14 +14,67 @@ export default class TaskEdit extends Component {
     this._isDone = data.isDone;
     this._id = id;
 
+    this._onSubmitButtonClick = this._onSubmitButtonClick.bind(this);
     this._onSubmit = null;
+
+    this._state.isDate = this._isDeadline();
+    this._state.isRepeated = this._isRepeated();
+
+    this._onChangeDate = this._onChangeDate.bind(this);
+    this._onChangeRepeated = this._onChangeRepeated.bind(this);
+  }
+
+  _processForm(formData) {
+    const entry = {
+      title: ``,
+      color: ``,
+      tags: new Set(),
+      dueDate: new Date(),
+      repeatingDays: {
+        'mo': false,
+        'tu': false,
+        'we': false,
+        'th': false,
+        'fr': false,
+        'sa': false,
+        'su': false,
+      }
+    };
+
+    const taskEditMapper = TaskEdit.createMapper(entry);
+
+    for (const pair of formData.entries()) {
+      const [property, value] = pair;
+      if (taskEditMapper[property]) {
+        taskEditMapper[property](value);
+      }
+    }
+
+    return entry;
   }
 
   _onSubmitButtonClick(e) {
     e.preventDefault();
-    if (typeof this._onSubmit === `function`) {
+    const formData = new FormData(this._element.querySelector(`.card__form`));
+    const newData = this._processForm(formData);
+    if (typeof this._onSubmit === `function` && this._onSubmit(newData)) {
       this._onSubmit();
     }
+    this.update(newData);
+  }
+
+  _onChangeDate() {
+    this._state.isDate = !this._state.isDate;
+    this._removeListeners();
+    this._partialUpdate();
+    this._addListeners();
+  }
+
+  _onChangeRepeated() {
+    this._state.isRepeated = !this._state.isRepeated;
+    this._removeListeners();
+    this._partialUpdate();
+    this._addListeners();
   }
 
   _isRepeated() {
@@ -30,6 +83,10 @@ export default class TaskEdit extends Component {
 
   _isDeadline() {
     return (this._dueDate.date !== ` `);
+  }
+
+  _partialUpdate() {
+    this._element.innerHTML = this.template;
   }
 
   set onSubmit(fn) {
@@ -77,10 +134,10 @@ export default class TaskEdit extends Component {
       <div class="card__details">
         <div class="card__dates">
           <button class="card__date-deadline-toggle" type="button">
-            date: <span class="card__date-status">${this._isDeadline() ? `yes` : `no`}</span>
+            date: <span class="card__date-status">${this._state.isDate ? `yes` : `no`}</span>
           </button>
 
-          <fieldset class="card__date-deadline" disabled>
+          <fieldset class="card__date-deadline" ${!this._state.isDate && `disabled`}>
             <label class="card__input-deadline-wrap">
               <input
                 class="card__date"
@@ -102,10 +159,10 @@ export default class TaskEdit extends Component {
           </fieldset>
 
           <button class="card__repeat-toggle" type="button">
-            repeat:<span class="card__repeat-status">${this._isRepeated() ? `yes` : `no`}</span>
+            repeat:<span class="card__repeat-status">${this._state.isRepeated ? `yes` : `no`}</span>
           </button>
 
-          <fieldset class="card__repeat-days">
+          <fieldset class="card__repeat-days" ${!this._state.isRepeated && `disabled`}>
             <div class="card__repeat-days-inner">
             ${Object.keys(this._repeatingDays).map((element) => {
     return `<input class="visually-hidden card__repeat-day-input"
@@ -124,7 +181,7 @@ export default class TaskEdit extends Component {
 
         <div class="card__hashtag">
           <div class="card__hastag-list>
-          ${this._tags.map((element) => {
+          ${Array.from(this._tags).map((element) => {
     return `<span class="card__hashtag-inner">
             <input
               type="hidden"
@@ -196,12 +253,32 @@ export default class TaskEdit extends Component {
   }
 
   _addListeners() {
-    this._cardForm = this._element.querySelector(`.card__form`);
-    this._onSubmitButtonClickBound = this._onSubmitButtonClick.bind(this);
-    this._cardForm.addEventListener(`submit`, this._onSubmitButtonClickBound);
+    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
+    this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
   }
 
   _removeListeners() {
-    this._cardForm.removeEventListener(`sumbit`, this._onSubmitButtonClickBound);
+    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
+    this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate);
+    this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated);
+  }
+
+  update(data) {
+    this._title = data.title;
+    this._tags = data.tags;
+    this._color = data.color;
+    this._repeatingDays = data.repeatingDays;
+    this._dueDate = data.dueDate;
+  }
+
+  static createMapper(target) {
+    return {
+      hashtag: (value) => target.tags.add(value),
+      text: (value) => (target.title = value),
+      color: (value) => (target.color = value),
+      repeat: (value) => (target.repeatingDays[value] = true),
+      date: (value) => (target.dueDate = value),
+    };
   }
 }
