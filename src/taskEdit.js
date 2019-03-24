@@ -1,5 +1,7 @@
 import {colors} from './utils';
 import Component from './component';
+import flatpickr from 'flatpickr';
+import moment from 'moment';
 
 export default class TaskEdit extends Component {
   constructor(data, id) {
@@ -94,7 +96,7 @@ export default class TaskEdit extends Component {
   }
 
   get template() {
-    return `<article class="card card--edit card--${this._color} ${this._isRepeated() ? `card--repeat` : ``}">
+    return `<article class="card card--edit card--${this._color} ${this._state.isRepeated ? `card--repeat` : ``}">
   <form class="card__form" method="get">
   <div class="card__inner">
     <div class="card__control">
@@ -144,7 +146,7 @@ export default class TaskEdit extends Component {
                 type="text"
                 placeholder="23 September"
                 name="date"
-                value="${this._dueDate}"
+                value="${moment(this._dueDate).format(`DD MMMM`)}"
               />
             </label>
             <label class="card__input-deadline-wrap">
@@ -153,7 +155,7 @@ export default class TaskEdit extends Component {
                 type="text"
                 placeholder="11:15 PM"
                 name="time"
-                value="${this._dueDate}"
+                value="${moment(this._dueDate).format(`hh:mm A`)}"
               />
             </label>
           </fieldset>
@@ -256,6 +258,20 @@ export default class TaskEdit extends Component {
     this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
     this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
     this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
+
+    flatpickr(`.card__date`, {
+      altInput: true,
+      altFormat: `j F`,
+      dateFormat: `j F`
+    });
+    flatpickr(`.card__time`, {
+      enableTime: true,
+      noCalendar: true,
+      altInput: true,
+      altFormat: `h:i K`,
+      dateFormat: `h:i K`
+    });
+
   }
 
   _removeListeners() {

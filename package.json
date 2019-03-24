@@ -10,11 +10,13 @@
     "test": "npm run eslint"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "babel-loader": "^8.0.5",
+    "@babel/core": "7.4.0",
+    "babel-loader": "8.0.5",
     "eslint": "5.13.0",
     "eslint-config-htmlacademy": "0.5.2",
-    "stylelint-config-htmlacademy": "^0.1.1",
+    "flatpickr": "4.5.7",
+    "moment": "2.24.0",
+    "stylelint-config-htmlacademy": "0.1.1",
     "webpack": "4.29.5",
     "webpack-cli": "3.2.3",
     "webpack-dev-server": "3.2.0"
