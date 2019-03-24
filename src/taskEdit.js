@@ -255,16 +255,19 @@ export default class TaskEdit extends Component {
   }
 
   _addListeners() {
-    this._element.querySelector(`.card__form`).addEventListener(`submit`, this._onSubmitButtonClick);
-    this._element.querySelector(`.card__date-deadline-toggle`).addEventListener(`click`, this._onChangeDate);
-    this._element.querySelector(`.card__repeat-toggle`).addEventListener(`click`, this._onChangeRepeated);
+    this._cardForm = this._element.querySelector(`.card__form`);
+    this._deadlineToggle = this._element.querySelector(`.card__date-deadline-toggle`);
+    this._repeatToggle = this._element.querySelector(`.card__repeat-toggle`);
+    this._cardForm.addEventListener(`submit`, this._onSubmitButtonClick);
+    this._deadlineToggle.addEventListener(`click`, this._onChangeDate);
+    this._repeatToggle.addEventListener(`click`, this._onChangeRepeated);
 
-    flatpickr(`.card__date`, {
+    this._date = flatpickr(this._element.querySelector(`.card__date`), {
       altInput: true,
       altFormat: `j F`,
       dateFormat: `j F`
     });
-    flatpickr(`.card__time`, {
+    this._time = flatpickr(this._element.querySelector(`.card__time`), {
       enableTime: true,
       noCalendar: true,
       altInput: true,
@@ -275,9 +278,16 @@ export default class TaskEdit extends Component {
   }
 
   _removeListeners() {
-    this._element.querySelector(`.card__form`).removeEventListener(`submit`, this._onSubmitButtonClick);
-    this._element.querySelector(`.card__date-deadline-toggle`).removeEventListener(`click`, this._onChangeDate);
-    this._element.querySelector(`.card__repeat-toggle`).removeEventListener(`click`, this._onChangeRepeated);
+    this._cardForm.removeEventListener(`submit`, this._onSubmitButtonClick);
+    this._deadlineToggle .removeEventListener(`click`, this._onChangeDate);
+    this._repeatToggle .removeEventListener(`click`, this._onChangeRepeated);
+    this._cardForm = null;
+    this._deadlineToggle = null;
+    this._repeatToggle = null;
+    this._date.destroy();
+    this._time.destroy();
+    this._date = null;
+    this._time = null;
   }
 
   update(data) {
